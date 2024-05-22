@@ -1,5 +1,5 @@
 {
-  "name": "telegram-bot-app",
+  "name": "copyright remover bot",
   "description": "Telegram Bot using Pyrogram",
   "repository": "https://github.com/TMM-TEAM/copyright",
   "env": {
