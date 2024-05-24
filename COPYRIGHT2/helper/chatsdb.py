@@ -1,4 +1,4 @@
-from config import MONGO_URL
+from config import MONGO_UR
 from motor.motor_asyncio import AsyncIOMotorClient as MongoCli
 
 mongo = MongoCli(MONGO_URL)
