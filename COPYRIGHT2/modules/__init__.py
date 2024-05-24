@@ -1,4 +1,4 @@
-import glob
+import glo
 from os.path import basename, dirname, isfile
 
 
