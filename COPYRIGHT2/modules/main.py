@@ -147,13 +147,7 @@ async def delete_and_reply(_, msg):
     await app.send_message(msg.chat.id, f"Hey {user_mention}, please keep your messages short!")
     
 
-# -----------------------------------------------------------------------------------
-
-
-    
-@app.on_message(filters.audio | filters.document | filters.photo | filters.sticker | filters.video)
-async def keep_reaction_message(client, message: Message):
-    pass 
+# ----------------------------------------------------------------------------------
 # -------------------------------
 
 async def delete_pdf_files(client, message):
