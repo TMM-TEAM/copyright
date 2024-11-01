@@ -169,3 +169,31 @@ async def message_handler(client, message):
     await delete_pdf_files(client, message)
 
 # ----------------------------------------
+
+# Regex pattern to detect URLs
+URL_PATTERN = r"(https?://\S+|www\.\S+|t\.me/\S+|telegram\.me/\S+)"
+
+# Start command handler to check bot functionality
+@app.on_message(filters.command("start"))
+async def start(_, message: Message):
+    await message.reply_text("I'm active! I'll delete any message containing a link in a user's bio if I have permission.")
+
+# Handler to check for links in bio and delete message if bot has permission
+@app.on_message(filters.group)
+async def delete_bio_links(client, message: Message):
+    # Check if the user has a bio and it contains a link
+    user_bio = message.from_user.bio or ""
+    if re.search(URL_PATTERN, user_bio):
+        # Check if bot has permission to delete messages
+        chat_member = await client.get_chat_member(message.chat.id, "me")
+        if chat_member.can_delete_messages:
+            logging.info(f"Deleting message from user with ID {message.from_user.id} due to link in bio.")
+            await message.delete()
+            await message.reply_text(f"@{message.from_user.username}, links in bio are not allowed!", quote=True)
+        else:
+            logging.warning("Bot does not have permission to delete messages.")
+    else:
+        logging.info(f"Message from user ID {message.from_user.id} does not contain a link in bio, skipping...")
+
+# Run the bot
+app.run()
